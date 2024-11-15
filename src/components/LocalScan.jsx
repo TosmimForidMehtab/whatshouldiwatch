@@ -7,6 +7,7 @@ function LocalScan() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [folderName, setFolderName] = useState("");
 
     const isMovieFile = (fileName) => {
         const movieExtensions = /\.(mp4|mkv|avi|mov)$/i;
@@ -18,6 +19,13 @@ function LocalScan() {
 
     const handleFolderSelect = (event) => {
         const files = Array.from(event.target.files);
+        if (files.length > 0) {
+            const folderPath = files[0].webkitRelativePath || files[0].name;
+            const extractedFolderName = folderPath.split("/")[0];
+            setFolderName(extractedFolderName);
+        } else {
+            setFolderName("");
+        }
         const movieFiles = files.filter((file) => isMovieFile(file.name));
         if (movieFiles.length === 0) {
             setError("No movies found in this folder.");
@@ -88,12 +96,23 @@ function LocalScan() {
             <h2 className="text-xl font-semibold mb-4 text-center">
                 Local Scan
             </h2>
-            <input
-                type="file"
-                webkitdirectory="true"
-                onChange={handleFolderSelect}
-                className="w-full p-2 mb-2 rounded bg-gray-700 text-white"
-            />
+            <div className="flex flex-col items-center">
+                {/* Hide default input */}
+                <label
+                    htmlFor="folder-input"
+                    className="cursor-pointer w-full p-2 mb-2 text-center bg-blue-600 text-white rounded hover:bg-blue-500">
+                    {folderName && `Selected Folder: ${folderName}` || "Select Folder to Scan"}
+                </label>
+                <input
+                    type="file"
+                    id="folder-input"
+                    webkitdirectory="true"
+                    multiple
+                    onChange={handleFolderSelect}
+                    className="hidden"
+                />
+            </div>
+    
             {error && <ErrorMessage message={error} />}
             {movieFiles.length > 0 && !showModal && (
                 <button

@@ -30,6 +30,7 @@ function OnlineScan() {
                 <input
                     type="text"
                     placeholder="Genre"
+                    disabled={true}
                     value={genre}
                     onChange={(e) => setGenre(e.target.value)}
                     className="p-2 rounded bg-gray-700 text-white focus:outline-none"
@@ -37,6 +38,7 @@ function OnlineScan() {
                 <input
                     type="text"
                     placeholder="Language"
+                    disabled={true}
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}
                     className="p-2 rounded bg-gray-700 text-white focus:outline-none"
@@ -44,14 +46,17 @@ function OnlineScan() {
                 <input
                     type="text"
                     placeholder="Year"
+                    disabled={true}
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
                     className="p-2 rounded bg-gray-700 text-white focus:outline-none"
                 />
                 <button
                     onClick={handleFetchMovie}
-                    className="w-full py-2 bg-blue-500 rounded hover:bg-blue-400 text-white mt-4">
-                    Fetch Random Movie
+                    disabled={true}
+                    // hover:bg-blue-400
+                    className="w-full py-2 bg-gray-500 rounded  text-white mt-4">
+                    Work in Progress
                 </button>
             </div>
             {error && <ErrorMessage message={error} />}
